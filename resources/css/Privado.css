@@ -1,0 +1,278 @@
+body{
+    font-family: Century Gothic;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: #78909c;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+    width: 20px;
+    height: 8px;
+    background-color: rgba(0, 0, 0, .6);
+    border-radius: 10px;
+  }
+
+body::-webkit-scrollbar-thumb {
+    background: #f44336; 
+    border: white solid 2px;
+    border-radius: 10px;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+#CajaBienvenido{
+    background-color: rgba(0, 0, 0, .6);
+    color: white; 
+}
+
+#CajaEncabezado{
+    background-color: rgba(0, 0, 0, .6);
+    color: white; 
+}
+
+#CajaModal{
+    background-color: rgba(0, 0, 0, .6);
+    color: white; 
+}
+
+#txt_buscar{
+    font-family: Century Gothic;
+    color: white;
+    font-size: large;
+}
+
+#lbBuscar{
+    color: white;
+    font-size: large;
+}
+
+#CajaCuerpo{
+    background-color: rgba(0, 0, 0, .6);
+    color: white; 
+}
+
+#CajaGraficos{
+    background-color: rgba(0, 0, 0, .6);
+    color: white; 
+}
+
+#CajaReloj{
+    background-color: rgba(0, 0, 0, .6);
+    color: white;
+    text-align:center;
+    padding:1em 0;
+}
+
+.caja_chart{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.Graficos{
+    border: solid 2px white;
+    border-spacing: 0.1em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#contenedor_graficos{
+    height: 545px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#contenedor_graficos::-webkit-scrollbar {
+    width: 20px;
+    height: 8px;
+    background-color: rgba(0, 0, 0, .6);
+    border-radius: 10px;
+  }
+
+#contenedor_graficos::-webkit-scrollbar-thumb {
+    background: #f44336; 
+    border: white solid 2px;
+    border-radius: 10px;
+}
+
+
+th{
+    color: white;
+}
+
+
+#CuerpoTabla{
+    background: #78909c;
+}
+
+#FilaTabla{
+    border: solid 2px white;
+    border-spacing: 0.1em;
+}
+
+#FilaTablaPedidos{
+    border: solid 2px white;
+    border-spacing: 0.1em;
+}
+
+#CuerpoTablaPedidos{
+    background: #78909c;
+}
+
+#CuerpoModalPedidos{
+    background: #78909c;
+}
+
+input{
+    font-family: Century Gothic;
+    font-size: large;
+}
+
+.tiempo{
+    width: 80%;
+    margin: 2em;
+}
+
+.tiempo p {
+    display: inline-block;
+    line-height: 1em;
+}
+
+.fecha{
+    font-family: Century Gothic;
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 0.3125rem;
+    background: rgba(0, 0, 0, .5);
+    padding: 20px;
+    width: 100%;
+}
+
+.reloj{
+    font-family: Century Gothic;
+    width: 100%;
+    padding: 20px;
+    font-size: 4em;
+    text-align: center;
+    background: rgba(0, 0, 0, .5);
+}
+
+.reloj , .caja_segundos {
+    display: inline-block;
+}
+
+.reloj .segundos,
+.reloj .ampm {
+    font-size: 2rem;
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+/*
+#Fecha{
+    border-radius: 22px 22px 22px 22px;
+    -moz-border-radius: 22px 22px 22px 22px;
+    -webkit-border-radius: 22px 22px 22px 22px;
+    border: 2px solid #ffffff;
+    border-spacing: 0.1em;
+}*/
+
+#CajaNoscript{
+    background-color: rgba(0, 0, 0, .6);
+    color: white; 
+  }
+
+@media only screen and (max-width: 600px){
+    #CuerpoMenu{
+        background-image: url(../img/cards/accesorios_carros7.jpg);
+        background-size:  cover;
+        background-attachment: fixed;
+    }
+}
+
+@media only screen and (min-width: 601px){
+    #CuerpoMenu{
+        background-image: url(../img/cards/accesorios_carros2.jpg);
+        background-size:  cover;
+        background-attachment: fixed;
+    }
+}
+
+@media only screen and (min-width: 1000px){
+    #CuerpoMenu{
+        background-image: url(../img/cards/accesorios_carros9.jpg);
+        background-size:  cover;
+        background-attachment: fixed;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    #CuerpoPrivado{
+        background-image: url(../img/FondoTiendaV4.jpg);
+        background-size:  cover;
+        background-attachment: fixed;
+    }
+}
+
+@media only screen and (min-width: 601px){
+    #CuerpoPrivado{
+        background-image: url(../img/FondoTiendaV4.jpg);
+        background-size:  cover;
+        background-attachment: fixed;
+    }
+}
+
+@media only screen and (min-width: 1000px){
+    #CuerpoPrivado{
+        background-image: url(../img/FondoTiendaV4.jpg);
+        background-size: cover;
+        background-attachment: fixed;
+    }
+}
+
+@media only screen and (min-width: 993px){
+#Tabla
+        tbody{
+        display:block;
+        height: 350px;
+        overflow:auto;
+        }
+        thead, tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;
+        }
+        thead {
+        width: calc( 100% - 1em )
+        }
+        table {
+        width:100%;
+        }
+    }
+
+    @media only screen and (min-width: 993px){
+        #TablaPedidos
+                tbody{
+                display:block;
+                height: 350px;
+                overflow:auto;
+                }
+                thead, tbody tr {
+                display:table;
+                width:100%;
+                table-layout:fixed;
+                }
+                thead {
+                width: calc( 100% - 1em )
+                }
+                table {
+                width:100%;
+                }
+            }

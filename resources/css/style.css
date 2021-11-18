@@ -1,0 +1,103 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: #78909c;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+row.tipo{
+ display: flex;
+ float: left;
+ width: 33%;
+}
+
+row.cartas {
+    flex-direction: column;
+    float: right;
+}
+
+#card1{
+    width: 540px;
+    height: 450px;
+    background-color: aquamarine;
+    margin-left: 125px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3%;
+}
+
+#id{
+    width: 115%;
+    margin: auto;
+}
+
+.login{
+    margin-top: 100px;
+}
+
+.login .card{
+    background-color: rgba(0, 0, 0, .6);
+}
+
+#menu{
+    color: rgb(186, 250, 114);
+}
+
+#icono-cuenta{
+    font-size: 60px;
+}
+
+#form-usuarios{
+    justify-content: center;
+    align-items: center;
+}
+
+#clientes-card{
+    background-color: rgba(0, 0, 0, .6);
+}
+
+*{
+    font-family: Century Gothic;
+}
+
+input, label{
+    font-family: Century Gothic;
+    color: white;
+}
+
+@media only screen and (max-width: 600px){
+    #CuerpoIndex{
+        background-image: url(../img/FondoTiendaV4.jpg);
+        background-size:  cover;
+        background-attachment: fixed;
+    }
+}
+
+@media only screen and (min-width: 601px){
+    #CuerpoIndex{
+        background-image: url(../img/FondoTiendaV4.jpg);
+        background-size:  cover;
+        background-attachment: fixed;
+    }
+}
+
+@media only screen and (min-width: 1000px){
+    #CuerpoIndex{
+        background-image: url(../img/FondoTiendaV4.jpg);
+        background-size: cover;
+        background-attachment: fixed;
+    }
+}
+ 
+#divpaso2{
+    display: none;    
+}
+
+#divpaso3{
+    display: none;    
+}

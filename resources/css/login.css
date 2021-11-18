@@ -1,0 +1,346 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+#CajaSlider{
+    background-color: rgba(0, 0, 0, .6);
+    color: white; 
+}
+
+#CajaLogin3{
+  background-color: rgba(0, 0, 0, .6);
+  color: white; 
+}
+
+#txt_usuario, #txt_buscar, #txt_contraseña, #txt_nombres_usuario, #txt_apellidos_usuario, #txt_correo_usuario, #txt_contraseña2, #txt_codigo, #txt_codigo2, #txt_correo{
+  font-family: Century Gothic;
+  color: white;
+  font-size: large;
+}
+
+#lb1, #lb2, #lb3, #lb4, #lb5, #lb6, #lbBuscar{
+  font-family: Century Gothic;
+  color: white;
+  font-size: large;
+}
+ 
+#ContenidoLogin{
+  background-color: rgba(0, 0, 0, .6);
+}
+
+#LinkRecuperarContraseña{
+  font-family: Century Gothic;
+  color: cyan;
+  font-size: large;
+}
+
+#CajaEncabezado{
+  background-color: rgba(0, 0, 0, .6);
+  color: white; 
+}
+
+#lbr1, #lbr2, #lbr3, #lbr4, #lbr5, #lbr6{
+  font-family: Century Gothic;
+  color: white;
+  font-size: small;
+}
+
+#CajaNoscript{
+  background-color: rgba(0, 0, 0, .6);
+  color: white; 
+}
+
+body::-webkit-scrollbar {
+  width: 20px;
+  height: 8px;
+  background-color: rgba(0, 0, 0, .6);
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #f44336; 
+  border: white solid 2px;
+  border-radius: 10px;
+}
+
+#h3_login{
+  display: inline-block;
+  position: relative;
+  color: white;
+}
+
+#h3_login::after, #h3_login::before{
+  content: '';
+  position: absolute;
+  width: 120px;
+  height: 3px;
+  background-color: currentColor;
+  top: 0.6em;
+  transform: scale(0);
+  transition: all 0.2s ease-in;
+}
+
+#h3_login:hover::before,#h3_login:hover::after{
+  transform: scale(1);
+}
+
+#h3_encabezado{
+  display: inline-block;
+  position: relative;
+  color: white;
+  font-style: oblique;
+}
+
+#h3_encabezado::after, #h3_encabezado::before{
+  content: '';
+  position: absolute;
+  width: 140px;
+  height: 3px;
+  background-color: currentColor;
+  top: 0.6em;
+}
+
+#h3_encabezado::before{
+  left: -160px;
+}
+
+#h3_encabezado::after{
+  right:-160px;
+}
+
+#h3_encabezado2{
+  display: inline-block;
+  position: relative;
+  color: white;
+  font-style: oblique;
+}
+
+#h3_encabezado2::after, #h3_encabezado2::before{
+  content: '';
+  position: absolute;
+  width: 140px;
+  height: 3px;
+  background-color: currentColor;
+  top: 0.6em;
+}
+
+#h3_encabezado2::before{
+  left: -160px;
+}
+
+#h3_encabezado2::after{
+  right:-160px;
+}
+
+#h3_encabezado_contacto{
+  display: inline-block;
+  position: relative;
+  color: white;
+  font-style: oblique;
+}
+
+.SPAN_TITULO_CONTACTO{
+  border-radius: 50%;
+  font-size: 50px;
+  display: inline-block;
+  text-align: center;
+  width: 60px;
+  height: 60px;
+  background: #78909c;
+  padding: 2px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, .6);
+  margin-right: 10px;
+}
+
+
+@media only screen and (max-width: 600px){
+  #h3_login{
+    font-size: 40px;
+  }
+  #h3_login::after, #h3_login::before{
+    content: '';
+    position: absolute;
+    width: 60px;
+  }
+  #h3_login::before{
+    left: -80px;
+  }
+  
+  #h3_login::after{
+    right:-80px;
+  }
+  #h3_encabezado{
+    font-size: 30px;
+  }
+  #h3_encabezado::after, #h3_encabezado::before{
+    content: '';
+    position: absolute;
+    width: 60px;
+  }
+    
+  #h3_encabezado::before{
+    left: -70px;
+  }
+  
+  #h3_encabezado::after{
+    right:-70px;
+  }
+
+  #h3_encabezado2{
+    font-size: 30px;
+  }
+  #h3_encabezado2::after, #h3_encabezado2::before{
+    content: '';
+    position: absolute;
+    width: 50px;
+  }
+    
+  #h3_encabezado2::before{
+    left: -55px;
+  }
+  
+  #h3_encabezado2::after{
+    right:-55px;
+  }
+
+  #h3_encabezado_contacto{
+    font-size: 30px;
+  }
+
+  .SPAN_TITULO_CONTACTO{
+  font-size: 25px;
+  width: 35px;
+  height: 35px;
+  margin-right: 5px;
+  }
+}
+
+@media only screen and (min-width: 601px){
+  #h3_login{
+    font-size: 40px;
+  }
+  #h3_login::after, #h3_login::before{
+    content: '';
+    position: absolute;
+    width: 70px;
+  }
+  #h3_login::before{
+    left: -90px;
+  }
+  
+  #h3_login::after{
+    right:-90px;
+  }
+
+  #h3_encabezado{
+    font-size: 35px;
+  }
+  #h3_encabezado::after, #h3_encabezado::before{
+    content: '';
+    position: absolute;
+    width: 70px;
+  }
+    
+  #h3_encabezado::before{
+    left: -90px;
+  }
+  
+  #h3_encabezado::after{
+    right:-90px;
+  }
+
+  #h3_encabezado2{
+    font-size: 35px;
+  }
+  #h3_encabezado2::after, #h3_encabezado2::before{
+    content: '';
+    position: absolute;
+    width: 70px;
+  }
+    
+  #h3_encabezado2::before{
+    left: -90px;
+  }
+  
+  #h3_encabezado2::after{
+    right:-90px;
+  }
+
+  #h3_encabezado_contacto{
+    font-size: 35px;
+  }
+
+  .SPAN_TITULO_CONTACTO{
+    font-size: 35px;
+    width: 45px;
+    height: 45px;
+    }
+}
+
+@media only screen and (min-width: 1000px){
+  #h3_login::after, #h3_login::before{
+    content: '';
+    position: absolute;
+    width: 140px;
+  }
+    
+  #h3_login::before{
+    left: -160px;
+  }
+  
+  #h3_login::after{
+    right:-160px;
+  }
+
+  #h3_encabezado{
+    font-size: 50px;
+  }
+
+  #h3_encabezado::after, #h3_encabezado::before{
+    content: '';
+    position: absolute;
+    width: 140px;
+  }
+    
+  #h3_encabezado::before{
+    left: -160px;
+  }
+  
+  #h3_encabezado::after{
+    right:-160px;
+  }
+
+  #h3_encabezado2{
+    font-size: 50px;
+  }
+
+  #h3_encabezado2::after, #h3_encabezado2::before{
+    content: '';
+    position: absolute;
+    width: 140px;
+  }
+    
+  #h3_encabezado2::before{
+    left: -160px;
+  }
+  
+  #h3_encabezado2::after{
+    right:-160px;
+  }
+
+  #h3_encabezado_contacto{
+    font-size: 50px;
+  }
+
+  .SPAN_TITULO_CONTACTO{
+    font-size: 50px;
+    width: 60px;
+    height: 60px;
+    }
+}

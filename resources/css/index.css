@@ -1,0 +1,70 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+#CajaLogin2{
+    background-color: rgba(0, 0, 0, .6);
+    color: white; 
+}
+
+#CajaLogin3{
+  background-color: rgba(0, 0, 0, .6);
+  color: white; 
+}
+
+#txt_usuario, #txt_contraseña_usuario, #txt_nombres_usuario, #txt_apellidos_usuario, #txt_correo_usuario, #txt_contraseña_usuario2, #txt_codigo, #txt_codigo2{
+  font-family: Century Gothic;
+  color: white;
+  font-size: large;
+}
+
+#lb1, #lb2, #lb3, #lb4, #lb5, #lb6{
+  font-family: Century Gothic;
+  color: white;
+  font-size: large;
+}
+ 
+#ContenidoLogin{
+  background-color: rgba(0, 0, 0, .6);
+}
+
+#LinkRecuperarContraseña{
+  font-family: Century Gothic;
+  color: cyan;
+  font-size: large;
+}
+
+#CajaEncabezado{
+  background-color: rgba(0, 0, 0, .6);
+  color: white; 
+}
+
+#lbr1, #lbr2, #lbr3, #lbr4, #lbr5, #lbr6{
+  font-family: Century Gothic;
+  color: white;
+  font-size: small;
+}
+
+#CajaNoscript{
+  background-color: rgba(0, 0, 0, .6);
+  color: white; 
+}
+
+body::-webkit-scrollbar {
+  width: 20px;
+  height: 8px;
+  background-color: rgba(0, 0, 0, .6);
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #f44336; 
+  border: white solid 2px;
+  border-radius: 10px;
+}
