@@ -1,0 +1,1188 @@
+SET DATESTYLE TO 'European';
+
+--Creación de tablas
+create table estado_cliente(
+id_estado_cliente serial primary key,
+estado_cliente varchar(50) unique
+);
+
+create table estado_factura(
+id_estado_factura serial primary key,
+estado_factura varchar(100) unique
+);
+
+create table estado_usuario(
+id_estado_usuario serial primary key,
+estado_usuario varchar(50) unique
+);
+
+create table tipo_usuario(
+id_tipo_usuario serial primary key,
+tipo_usuario varchar(50) unique
+);
+
+create table tipo_productos(
+id_tipo_producto serial primary key,
+tipo_producto varchar(50) unique,
+promocion int
+);
+
+create table estado_productos(
+id_estado_producto serial primary key,
+estado_producto varchar(50) unique
+);
+
+create table marcas(
+id_marcas serial primary key,
+marcas varchar(50) unique,
+imagen_marca varchar(100)
+);
+
+create table cliente(
+id_cliente serial primary key,
+nombre_cliente varchar(50),
+apellido_cliente varchar(50),
+correo_cliente varchar(50) unique,
+usuario_cliente varchar(50) unique,
+contrasena_cliente varchar(200),
+id_estado_cliente int,
+foreign key (id_estado_cliente) references estado_cliente(id_estado_cliente)
+);
+
+create table factura(
+id_factura_cliente serial primary key,
+id_cliente int,
+id_estado_factura int,
+total_factura numeric(10,2),
+fecha_factura Varchar(150),
+tipo_pago varchar(50),
+direccion varchar(200),
+foreign key (id_cliente) references cliente(id_cliente),
+foreign key (id_estado_factura) references estado_factura(id_estado_factura)
+);
+
+create table usuario(
+id_usuario serial primary key,
+nombre_usuario varchar(50),
+apellido_usuario varchar(50),
+correo varchar(100) unique,
+usuario varchar(50) unique,
+contrasena_usuario varchar(200),
+id_estado_usuario int,
+id_tipo_usuario int,
+foreign key (id_estado_usuario) references estado_usuario(id_estado_usuario),
+foreign key (id_tipo_usuario) references tipo_usuario(id_tipo_usuario)
+);
+
+create table productos(
+id_productos serial primary key,
+nombre_producto varchar(50),
+precio numeric(10,2),
+cantidad_producto int,
+imagen varchar(100),
+id_estado_producto int,
+id_marcas int,
+id_tipo_producto int,
+foreign key (id_marcas) references marcas(id_marcas),
+foreign key (id_estado_producto) references estado_productos(id_estado_producto),
+foreign key (id_tipo_producto) references tipo_productos(id_tipo_producto)
+);
+
+create table detalle_factura(
+id_detalle_factura serial primary key,
+id_factura int,
+precio_comprados numeric(10,2),
+cantidad_comprados int,
+id_productos int,
+foreign key (id_productos) references productos(id_productos),
+foreign key (id_factura) references factura(id_factura_cliente)
+);
+
+create table resena(
+id_resena serial primary key,
+comentario varchar(100),
+clasificacion numeric(10,0),
+estado_comentario varchar(30),
+id_detalle_factura int,
+foreign key (id_detalle_factura) references detalle_factura(id_detalle_factura)
+);
+
+/*Sirve la creación de las tablas*/
+
+select * from marcas ;
+
+update marcas set imagen_marca ='accesorios_carros4.jpg' where id_marcas = 1
+
+----------------------------------------------------llenado de tablas---------------------------------------------------
+
+--llenando tabla estado_cliente
+insert into estado_cliente(estado_cliente)
+                    values('Activo'),
+                          ('Inactivo'),
+			  ('Descontinuado'),
+                          ('En uso');
+                          
+--llenando tabla estado_factura
+insert into estado_factura(estado_factura)
+values('Pendiente'),
+      ('Finalizada'),
+      ('En envío'),
+      ('Entregada'),
+      ('Descartada');
+
+--llenando estado_usuario
+insert into estado_usuario(estado_usuario) 
+values('Activo'),
+      ('Inactivo'),
+      ('Descontinuado'),
+      ('En uso'),
+      ('Hey parate ahí bicho ijueput4');
+     
+--llenando tipo_usuario
+insert into tipo_usuario(tipo_usuario)
+values('SuperAdministrador'),
+      ('Administrador'),
+      ('Empleado');
+
+--llenando tabla tipo productos
+insert into tipo_productos(tipo_producto,promocion)
+		    values('Cargadores para automoviles',15),
+			  ('Cafeteras moviles',10),
+			  ('Almohadilla adhesiva',12),
+			  ('Ventiladores',23),
+			  ('Aromatizantes',10),
+			  ('Decorativos',20),
+			  ('Cenizeros',15),
+			  ('Cojines', 10),
+			  ('Linternas', 10),
+			  ('plegables',0);
+
+--llenando tabla estado_productos
+insert into estado_productos(estado_producto) 
+		      values('Exitencia'),
+			    ('Agotado'),
+			    ('En espera'),
+			    ('Descontinuado');
+
+--llenando marcas
+insert into marcas(marcas,imagen_marca)
+values('Xiaomi','accesorios_carros4.jpg'),
+      ('Huawei','accesorios_carros4.jpg'),
+      ('Cutequeen','memecito.png'),
+      ('HOTOR','memecito.png'),
+      ('High Road','memecito.png'),
+      ('Super repuestos','memecito.png'),
+      ('Grupo Q', 'memecito.png'),
+      ('Interesting car', 'memecito.png'),
+      ('Nonda', 'memecito.png'),
+      ('Bosynoy', 'memecito.png'),
+      ('Bestrix', 'memecito.png'),
+      ('Invisible Glass', 'memecito.png'),
+      ('Staont','memecito.png'),
+      ('Tech Tools', 'memecito.png'),
+      ('Perisphere And Trylon Games','memecito.png');
+
+--llenando tabla clientes
+insert into cliente (nombre_cliente,apellido_cliente,correo_cliente,usuario_cliente,contrasena_cliente,id_estado_cliente)
+values('Carlos','Marroquin','marro@gmail.com','marro','marroquin123',1),
+      ('Carlos','Miranda','Miranda@gmail.com','miranda','miranda23',2),
+      ('Herbert','Choto','choto@gmail.com','chotito','herbert123',2),
+      ('Miguel','Carranza','Carranza@gmail.com','Carranza15','Miguelito',1),
+      ('Cecilia','Romero','ceci@gmail.com','Cecilia','Romero159',1),
+      ('Alberto','Minero','Alberto@gmail.com','Albertito','Minero',1),
+      ('Dagoberto','Huezo','Huezo@gmail.com','Huezo','Dagobeto',2),
+      ('Ana','Alfaro','AlfaroAna@gmail.com','Anita','Alfaro',2),
+      ('Nathaly','Sorto','Nathy@gmail.com','Nathy','Sorto789',2),
+      ('Carlos','Solorsano','Carlos@gmail.com','Solorsano','545641hola',2),
+      ('Jose','Herrera','Josesito@gmail.com','Jose022','Joseherrera',2),
+      ('Alejandra','Bonilla','Bonilla@gmail.com','Aleuwu','Bonilla202',2),
+      ('Alejandro','Castillo','Alejandro@gmail.com','Castillo45','aleBonilla',2),
+      ('Guillermo','Gonzalez','Memo@gmail,com','Memito','Gonzalez125',1),
+      ('Katherine','Minero','Kathy@gmail.com','Kathita','Minero12',1),
+      ('Orlando','Cisneros','orlandocisneros23@gmail.com','Orcis23','jodertio',3),
+      ('Josue','Reyes','josureyes@gmail.com','josuyes12','lajurawey',3),
+      ('Herbert','Ramírez','Herbertrez@gmail.com','Herbertmirez','mandingo',2),
+      ('Nacho','Vidal','nachovida@gmail.com','nachovidaL','soplanucas',1),
+      ('Elsa','Broso','Elsa_Broso@gmail.com','Elsab','cipoton',1),
+      ('Adalberto','Minero','Adalberto@gmail.com','Adalbertito','comunistasdeshit',3),
+      ('Donald','Trompas','Dtrompas@gmail.com','Misiles24','peleardilla',3),
+      ('Nayic','Pelele','Nalele@gmail.com','Nayic13','golondrinawey',2),
+      ('Nathaly','Majano','NathyMajano@gmail.com','NathyJano','oraleprro',2),
+      ('Jorge','Garcia','Jorcia503@gmail.com','JorgeGarcia','viejolin503',2),
+      ('Jose','Rios','Josesitorios@gmail.com','Joserios022','Joserios',3),
+      ('Alejandra','Bonilla Aguillon','Bonillaguillon@gmail.com','Aleboni','Bonillaguilon202',1),
+      ('Alejandro','Carrillo','Alejandrocarri@gmail.com','AleCarrillo45','alecarrillo',2),
+      ('Armando','Guerra','ArmandoGuerra@gmail,com','ArmaGuerra','culic4g4do23',3),
+      ('Katherine','Alfaro','KathyAlfa@gmail.com','Kathitalfa','alfaro123',3);
+
+--llenando tabla factura
+insert into factura(id_cliente, id_estado_factura, total_factura, fecha_factura, tipo_pago, direccion)
+	     values(1, 1, 11.11, '01/01/2020','efectivo','Bicho cerote vení'),
+		   (1, 2, 11.12, '01/02/2020','efectivo','Por donde se ponen los bichos'),
+		   (1, 3, 11.13, '01/03/2020','efectivo','Bicho cerote vení'),
+		   (2, 4, 22.21, '02/01/2020','tarjeta de crédito','Culero que se le quema el arroz'),
+		   (2, 5, 22.22, '02/02/2020','tarjeta de crédito','Gran pan con chumpe'),
+		   (2, 5, 22.23, '02/03/2020','tarjeta de crédito','Deje de pendejo joven'),
+		   (3, 4, 33.31, '03/01/2020','efectivo','Deje de mariconadas'),
+		   (3, 3, 33.32, '03/02/2020','efectivo','Roberto el que te deja el...'),
+		   (3, 3, 33.33, '03/03/2020','efectivo','Dense verga pues majes'),
+		   (4, 1, 44.41, '04/01/2020','tarjeta de crédito','¿Qué decis cerote?'),
+		   (4, 1, 44.42, '04/02/2020','tarjeta de crédito','Decimelo en la cara pues'),
+		   (4, 5, 44.43, '04/03/2020','tarjeta de crédito','Como dijo schafik: ¡come mierda!'),
+		   (5, 2, 55.51, '05/01/2020','efectivo','Entren la ropa cerotes, viene el agua'),
+		   (5, 2, 55.52, '05/02/2020','efectivo','A la puta, mucha tarea'),
+		   (5, 2, 55.53, '05/03/2020','efectivo','Vaya vaya corranse un pupitre'),
+		   (6, 3, 66.61, '06/01/2020','tarjeta de crédito','Vaya ese grupito de alla atras se me separa'),
+		   (6, 1, 66.62, '06/02/2020','tarjeta de crédito','Deme su número de carnet'),
+		   (6, 2, 66.63, '06/03/2020','tarjeta de crédito','Vaya jovenes, levanten la mano, voy a pasar asistencia'),
+		   (7, 2, 77.71, '07/01/2020','efectivo','Pedime 2 de queso'),
+		   (7, 3, 77.72, '07/02/2020','efectivo','Llename la botella porfa'),
+		   (7, 4, 77.73, '07/03/2020','efectivo','Ah puya si es el toque para tercer ciclo'),
+		   (8, 5, 88.81, '08/01/2020','tarjeta de crédito','Hey maje ya viste la nota'),
+		   (8, 5, 88.82, '08/02/2020','tarjeta de crédito','Deme su número de carnet, le voy a poner llegada tarde'),
+		   (8, 5, 88.83, '08/03/2020','tarjeta de crédito','Hey va pues maje'),
+		   (9, 2, 99.91, '09/01/2020','efectivo','¿Quién se está cagando?'),
+		   (9, 3, 99.92, '09/02/2020','efectivo','¿Hey maje corre, ya van a tocar?'),
+		   (9, 4, 99.93, '09/03/2020','efectivo','¿Puedo ir a sacar unas copias a esto?'),
+		   (10, 5, 100.01, '10/01/2020','tarjeta de crédito','Ponele llave a la puerta'),
+		   (10, 1, 100.02, '10/02/2020','tarjeta de crédito','Apaga la luz porfa'),
+		   (10, 2, 100.03, '10/03/2020','tarjeta de crédito','Ay le das esto a...'),
+		   (11, 3, 111.11, '11/01/2020','efectivo','Terceros años adelante'),
+		   (11, 2, 111.12, '11/02/2020','efectivo','Jovenes de terceros años...'),
+		   (11, 4, 111.13, '11/03/2020','efectivo','Maje corre van a cerrar la puerta'),
+		   (12, 5, 122.21, '12/01/2020','tarjeta de crédito','Hey ya vino el micro'),
+		   (12, 4, 122.22, '12/02/2020','tarjeta de crédito','Ya tocaron, ¿podemos salir?'),
+		   (12, 5, 122.23, '12/03/2020','tarjeta de crédito','Ya tocaron, ¿Salimos profe?'),
+		   (13, 3, 133.31, '13/01/2020','efectivo','Vaya jovenes ya estan las notas ingresadas en el sistema'),
+		   (13, 3, 133.32, '13/02/2020','efectivo','Jovenes revisen sus notas'),
+		   (13, 2, 133.33, '13/03/2020','efectivo','Jovenes mañana se cierra el perfil de...'),
+		   (14, 2, 144.41, '14/01/2020','tarjeta de crédito','Tienen de lunes hasta viernes a las 11:59 pm'),
+		   (14, 4, 144.42, '14/02/2020','tarjeta de crédito','Vaya presten atención al video'),
+		   (14, 5, 144.43, '14/03/2020','tarjeta de crédito','Cierren sus máquinas'),
+		   (15, 4, 155.51, '15/01/2020','efectivo','Me presta al joven...'),
+		   (15, 3, 155.52, '15/02/2020','efectivo','Buenos dias vengo de parte de la comisión de...'),
+		   (15, 2, 155.53, '15/03/2020','efectivo','Gracias y pasen una bonita mañana');
+		   
+--llenando tabla usuario
+insert into usuario(nombre_usuario,apellido_usuario,usuario,contrasena_usuario,correo,id_estado_usuario,id_tipo_usuario)
+values('Carlos','Herrera','CH2020','20200523','20200523@gmail.com',2,1),
+      ('Alicia','Carmen','AC2020','20205648','202005212@gmail.com',2,1),
+      ('Eric','Dominguez','ED2020','20205821','20201212@gmail.com',2,1),
+      ('Willian','Cortez','WC202323','20207484','2020112@gmail.com',1,2),
+      ('Jhansi','Aguilar','JA202212','20204951','212112@gmail.com',2,2),
+      ('Guillermo','Peréz','GP202124','20201234','212232@gmail.com',1,3),
+      ('Douglas Elian','Cortez Salmeron','Douglascortez','decssced','21223BLA@gmail.com',2,3),
+      ('Guillermo andres','Minero Alfaro','guillermoalfaro','gamaamag','212232LE@gmail.com',1,3),
+      ('Bryan Eliseo','De la Cruz Amaya','bryancruzito','becaaceb','212232LIK@gmail.com',2,3),
+      ('Wilmer David','Carrillo Ortega','wilmercarrillo','wdcoocdw','212232COCK@gmail.com',1,3),
+      ('Juan Jose','Blanco Reyes','juanreyes','jjbrrbjj','212232w@gmail.com',2,3),
+      ('Giovani','Herrera','GH2020','20209423','212232x@gmail.com',2,1),
+      ('Alicia','Guido','AG2020','20204912','212232m@gmail.com',3,3),
+      ('Eric','Cuellar','EC2020','2020296','Maricoxv2@gmail.com',2,3),
+      ('Willian','Cortez','WC2020','20201295','Maricos2@gmail.com',3,2),
+      ('Jhansi','Aguilar','JA2020','20204222','Maricos123@gmail.com',3,3),
+      ('Guillermo','Peréz','GP2020','20201111','Maricos321@gmail.com',1,1),
+      ('Douglas Eduardo','Carrillo Salvador','DouglasCarrillo','DECSDECS','Maricos007@gmail.com',2,2),
+      ('Guillermo josue','Martínez Aguillón','guillermoaguillon','GAMAGAMA','Maricos001@gmail.com',2,1),
+      ('Bryan Elias','Cruz Anaya','bryancruz','BEBECACA','Maricos002@gmail.com',1,2),
+      ('William David','Carrillo Orellana','wilmercarrillo13','WDCOWDCO','Maricos003@gmail.com',1,2),
+      ('Julio Jeremias','Benitez Romero','julioromero','JJBJJJBJ','Maricos004@gmail.com',1,3),	
+      ('Alma Marcela','Gozo','AM2020','20200325','Maricos005@gmail.com',2,3),
+      ('Ester','Mosobicho','EM2020','20204229','Maricos006@gmail.com',3,3),
+      ('Omar','Icón','OI2020','20201231','Maricos008@gmail.com',1,1),
+      ('Casimiro','Lateta','CL2020','20204239','Maricos009@gmail.com',2,2),
+      ('Lucila','Tanga','LT2020','20204289','Maricos010@gmail.com',1,2),
+      ('Debora Dora','De Cabezas','DC2020','20204271','Maricos012@gmail.com',2,1),
+      ('JORGE','NITALES','JN2020','20201247','Maricos018@gmail.com',2,1),
+      ('Elsa','Porico','EP2020','20204829','Maricos013@gmail.com',3,1);
+
+--llenando tabla productos
+insert into productos(nombre_producto,precio,cantidad_producto,imagen,id_estado_producto,id_marcas,id_tipo_producto) 
+values('Almohadilla Adhesiva',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Cargador inalambrico',12.5,5,'accesorios_carros4.jpg',1,2,3),
+      ('Cargador inalambrico con almohadilla adhesiva',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Depositor de cenizas',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Luces leds',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Tira luces leds',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Calentador de tazas',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Arrancador de motor',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('stylus stringer',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Cargador inalambrico',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Garmin dash car',12.5,5,'accesorios_carros4.jpg',1,2,3),
+      ('Handpresso',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Router con datos moviles',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Bomba de aire',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Advertencia de leds',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Calentador de ventilador para parabrisas',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Bomba de transeferencia de aceite y diesel',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Receptor bluetooth',12.5,5,'accesorios_carros4.jpg',3,2,3),
+      ('Antideslisante para los neumaticos',12.5,5,'accesorios_carros4.jpg',3,1,3),
+      ('Purificador de aire',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Bomba de transeferencia de aceite y diesel',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Medidor de presion de neumatico',12.5,5,'accesorios_carros4.jpg',2,2,3),
+      ('Termometro de ventosa',12.5,5,'accesorios_carros4.jpg',1,1,3),
+      ('Ventilador recargable',45.60,20,'accesorios_carros4.jpg',4,7,4),
+      ('Aromatizador de baterias',18.75,25,'accesorios_carros4.jpg',2,6,5),
+      ('Stickers para parabrisas',20.39,30,'accesorios_carros4.jpg',1,15,6),
+      ('Cenizero con encededor',35.75,50,'accesorios_carros4.jpg',3,9,7),
+      ('Cama plegable para niño',43.62,15,'accesorios_carros4.jpg',2,14,9),
+      ('Mesa plegable', 50.50,10,'accesorios_carros4.jpg',2,13,9),
+      ('Cenicero con cargador de celular',60,40,'accesorios_carros4.jpg',3,11,7),
+      ('Stickers brillantes en la oscuridad',45.60,38,'accesorios_carros4.jpg',1,9,6),
+      ('Portavasos con cenizero',45.60,45,'accesorios_carros4.jpg',4,8,7),
+      ('Ventilador recargable con reloj',50,35,'accesorios_carros4.jpg',3,10,4);
+      
+SELECT*FROM DETALLE_FACTURA;
+SELECT*FROM FACTURA;
+--llenando tabla detalle_factura
+insert into detalle_factura(id_factura,precio_comprados,cantidad_comprados,id_productos)
+		     values(1,11.11,1,1),
+			   (2,22.22,2,2),
+			   (3,33.33,3,3),
+			   (4,44.44,4,4),
+			   (5,55.55,5,5),
+			   (1,11.11,2,1),
+			   (1,22.22,2,2),
+			   (2,33.33,2,1),
+			   (2,44.44,2,2),
+			   (3,55.55,2,1),
+			   (3,66.66,2,2),
+			   (4,77.77,2,1),
+			   (4,88.88,2,2),
+			   (5,99.99,2,1),
+			   (5,100.00,2,2),
+			   (6,111.11,2,1),
+			   (6,122.22,2,2),
+			   (7,133.33,2,1),
+			   (7,144.44,2,2),
+			   (8,155.55,2,1),
+			   (8,166.66,2,2),
+			   (9,177.77,2,1),
+			   (9,188.88,2,2),
+			   (10,199.99,2,1),
+			   (10,200.00,2,2),
+			   (11,211.11,2,1),
+			   (11,222.22,2,2),
+			   (12,233.33,2,1),
+			   (12,244.44,2,2),
+			   (13,255.55,2,1),
+			   (13,266.66,2,2),
+			   (14,277.77,2,1),
+			   (14,288.88,2,2),
+			   (15,299.99,2,1),
+			   (15,300.00,2,2),
+			   (16,311.11,2,1),
+			   (16,322.22,2,2),
+			   (17,233.33,2,1),
+			   (17,244.44,2,2),
+			   (18,255.55,2,1),
+			   (18,266.66,2,2),
+			   (19,277.77,2,1),
+			   (19,288.88,2,2),
+			   (20,299.99,2,1),
+			   (20,300.00,2,2),
+			   (1,11.11,3,1),
+			   (1,22.22,3,2),
+			   (1,22.22,3,3),
+			   (2,33.33,3,1),
+			   (2,44.44,3,2),
+			   (2,44.44,3,3),
+			   (3,55.55,3,1),
+			   (3,66.66,3,2),
+			   (3,66.66,3,3),
+			   (4,77.77,3,1),
+			   (4,88.88,3,2),
+			   (4,77.77,3,3),
+			   (5,99.99,3,1),
+			   (5,100.00,3,2),
+			   (5,100.00,3,3),
+			   (6,111.11,3,1),
+			   (6,122.22,3,2),
+			   (6,122.22,3,3),
+			   (7,133.33,3,1),
+			   (7,144.44,3,2),
+			   (7,144.44,3,3),
+			   (8,155.55,3,1),
+			   (8,166.66,3,2),
+			   (8,166.66,3,3),
+			   (9,177.77,3,1),
+			   (9,188.88,3,2),
+			   (9,188.88,3,3),
+			   (10,199.99,3,1),
+			   (10,200.00,3,2),
+			   (10,199.99,3,3),
+			   (11,211.11,3,1),
+			   (11,222.22,3,2),
+			   (11,222.22,3,3),
+			   (12,233.33,3,1),
+			   (12,244.44,3,2),
+			   (12,244.44,3,3),
+			   (13,255.55,3,1),
+			   (13,266.66,3,2),
+			   (13,266.66,3,3),
+			   (14,277.77,3,1),
+			   (14,288.88,3,2),
+			   (14,288.88,3,3),
+			   (15,299.99,3,1),
+			   (15,300.00,3,2),
+			   (15,300.00,3,3),
+			   (16,311.11,3,1),
+			   (16,322.22,3,2),
+			   (16,311.11,3,3),
+			   (17,233.33,3,1),
+			   (17,244.44,3,2),
+			   (17,244.44,3,3),
+			   (18,255.55,3,1),
+			   (18,266.66,3,2),
+			   (18,266.66,3,3),
+			   (19,277.77,3,1),
+			   (19,288.88,3,2),
+			   (19,277.77,3,3),
+			   (20,299.99,3,1),
+			   (20,300.00,3,2),
+			   (20,299.99,3,3),
+			   (1,11.11,4,1),
+			   (1,22.22,4,2),
+			   (1,22.22,4,3),
+			   (1,22.22,4,4),
+			   (2,33.33,4,1),
+			   (2,44.44,4,2),
+			   (2,44.44,4,3),
+			   (2,44.44,4,4),
+			   (3,55.55,4,1),
+			   (3,66.66,4,2),
+			   (3,66.66,4,3),
+			   (3,66.66,4,4),
+			   (4,77.77,4,1),
+			   (4,88.88,4,2),
+			   (4,88.88,4,3),
+			   (4,77.77,4,4),
+			   (5,99.99,4,1),
+			   (5,100.00,4,2),
+			   (5,100.00,4,3),
+			   (5,100.00,4,4),
+			   (6,111.11,4,1),
+			   (6,122.22,4,2),
+			   (6,122.22,4,3),
+			   (6,122.22,4,4),
+			   (7,133.33,4,1),
+			   (7,144.44,4,2),
+			   (7,144.44,4,3),
+			   (7,144.44,4,4),
+			   (8,155.55,4,1),
+			   (8,166.66,4,2),
+			   (8,166.66,4,3),
+			   (8,166.66,4,4),
+			   (9,177.77,4,1),
+			   (9,188.88,4,2),
+			   (9,188.88,4,3),
+			   (9,188.88,4,4),
+			   (10,199.99,4,1),
+			   (10,200.00,4,2),
+			   (10,199.99,4,3),
+			   (10,200.00,4,4),
+			   (11,211.11,4,1),
+			   (11,222.22,4,2),
+			   (11,222.22,4,3),
+			   (11,222.22,4,4),
+			   (12,233.33,4,1),
+			   (12,244.44,4,2),
+			   (12,244.44,4,3),
+			   (12,244.44,4,4),
+			   (13,255.55,4,1),
+			   (13,266.66,4,2),
+			   (13,266.66,4,3),
+			   (13,266.66,4,4),
+			   (14,277.77,4,1),
+			   (14,288.88,4,2),
+			   (14,288.88,4,3),
+			   (14,288.88,4,4),
+			   (15,299.99,4,1),
+			   (15,300.00,4,2),
+			   (15,300.00,4,3),
+			   (15,300.00,4,4),
+			   (16,311.11,4,1),
+			   (16,322.22,4,2),
+			   (16,311.11,4,3),
+			   (16,311.11,4,4),
+			   (17,233.33,4,1),
+			   (17,244.44,4,2),
+			   (17,244.44,4,3),
+			   (17,244.44,4,4),
+			   (18,255.55,4,1),
+			   (18,266.66,4,2),
+			   (18,266.66,4,3),
+			   (18,266.66,4,4),
+			   (19,277.77,4,1),
+			   (19,288.88,4,2),
+			   (19,277.77,4,3),
+			   (19,277.77,4,4),
+			   (20,299.99,4,1),
+			   (20,300.00,4,2),
+			   (20,299.99,4,3),
+			   (20,299.99,4,4),
+			   (1,11.11,5,1),
+			   (1,22.22,5,2),
+			   (1,22.22,5,3),
+			   (1,22.22,5,4),
+			   (1,22.22,5,5),
+			   (2,33.33,5,1),
+			   (2,44.44,5,2),
+			   (2,44.44,5,3),
+			   (2,44.44,5,4),
+			   (2,44.44,5,5),
+			   (3,55.55,5,1),
+			   (3,66.66,5,2),
+			   (3,66.66,5,3),
+			   (3,66.66,5,4),
+			   (3,66.66,5,5),
+			   (4,77.77,5,1),
+			   (4,88.88,5,2),
+			   (4,88.88,5,3),
+			   (4,77.77,5,4),
+			   (4,77.77,5,5),
+			   (5,99.99,5,1),
+			   (5,100.00,5,2),
+			   (5,100.00,5,3),
+			   (5,100.00,5,4),
+			   (5,100.00,5,5),
+			   (6,111.11,5,1),
+			   (6,122.22,5,2),
+			   (6,122.22,5,3),
+			   (6,122.22,5,4),
+			   (6,122.22,5,5),
+			   (7,133.33,5,1),
+			   (7,144.44,5,2),
+			   (7,144.44,5,3),
+			   (7,144.44,5,4),
+			   (7,144.44,5,5),
+			   (8,155.55,5,1),
+			   (8,166.66,5,2),
+			   (8,166.66,5,3),
+			   (8,166.66,5,4),
+			   (8,166.66,5,5),
+			   (9,177.77,5,1),
+			   (9,188.88,5,2),
+			   (9,188.88,5,3),
+			   (9,188.88,5,4),
+			   (9,188.88,5,5),
+			   (10,199.99,5,1),
+			   (10,200.00,5,2),
+			   (10,199.99,5,3),
+			   (10,200.00,5,4),
+			   (10,200.00,5,5),
+			   (11,211.11,5,1),
+			   (11,222.22,5,2),
+			   (11,222.22,5,3),
+			   (11,222.22,5,4),
+			   (11,222.22,5,5),
+			   (12,233.33,5,1),
+			   (12,244.44,5,2),
+			   (12,244.44,5,3),
+			   (12,244.44,5,4),
+			   (12,244.44,5,5),
+			   (13,255.55,5,1),
+			   (13,266.66,5,2),
+			   (13,266.66,5,3),
+			   (13,266.66,5,4),
+			   (13,266.66,5,5),
+			   (14,277.77,5,1),
+			   (14,288.88,5,2),
+			   (14,288.88,5,3),
+			   (14,288.88,5,4),
+			   (14,288.88,5,5),
+			   (15,299.99,5,1),
+			   (15,300.00,5,2),
+			   (15,300.00,5,3),
+			   (15,300.00,5,4),
+			   (15,300.00,5,5),
+			   (16,311.11,5,1),
+			   (16,322.22,5,2),
+			   (16,311.11,5,3),
+			   (16,311.11,5,4),
+			   (16,311.11,5,5),
+			   (17,233.33,5,1),
+			   (17,244.44,5,2),
+			   (17,244.44,5,3),
+			   (17,244.44,5,4),
+			   (17,244.44,5,5),
+			   (18,255.55,5,1),
+			   (18,266.66,5,2),
+			   (18,266.66,5,3),
+			   (18,266.66,5,4),
+			   (18,266.66,5,5),
+			   (19,277.77,5,1),
+			   (19,288.88,5,2),
+			   (19,277.77,5,3),
+			   (19,277.77,5,4),
+			   (19,277.77,5,5),
+			   (20,299.99,5,1),
+			   (20,300.00,5,2),
+			   (20,299.99,5,3),
+			   (20,299.99,5,4),	
+			   (20,299.99,5,5);
+			   	
+--llenando tabla resena
+insert into resena(comentario,clasificacion,estado_comentario,id_detalle_factura)
+	     values('es un buen producto chavales',5,'Activo',1),
+		   ('es un mal producto chavales',1,'Inactivo',2),
+		   ('a tomar por locu con este artefacto',2,'Activo',3),
+		   ('lo recomiendo para ciegos porque no veran que mal producto es :v',3,'Inactivo',4),
+		   ('Mira que cipote... y es todo para ti.',4,'Activo',5),		   
+		   ('El mozote',5,'Activo',1),
+		   ('China tuvo la culpa',1,'Inactivo',2),
+		   ('Apu se va de los simpsons',2,'Activo',3),
+		   ('Nunca te olvidaremos nuegado',3,'Inactivo',4),
+		   ('Que viva el coronavirus',4,'Activo',5),
+		   ('El 9/11 fue un montaje',5,'Activo',1),
+		   ('Como diria mi gato: guaf',1,'Inactivo',2),
+		   ('Qué bonitas piernas... ¿A qué hora abren?',2,'Activo',3),		   
+		   ('Miren nada más, don comedia',3,'Inactivo',4),	
+		   ('Mátame si no te sirvo, pero primero pruébame.',4,'Activo',5),		   
+		   ('Paco flores no murió',5,'Activo',1),
+		   ('Bonitos pantalones, quedarían muy bien en el suelo de mi dormitorio.',1,'Inactivo',2),	
+		   ('El médico me prohibió levantar cosas pesadas.. ¿Me ayudas a hacer pipí?',2,'Activo',3),
+		   ('Si 2+2=4 ¿porque ella no me ama?',3,'Inactivo',4),
+		   ('¿Te importa si compartimos el taxi hacia mi casa?',4,'Activo',5),	   
+		   ('chua dijo el bebé',5,'Activo',1),
+		   ('Los ogros son como las cebollas...',1,'Inactivo',2),
+		   ('¿Cómo se dice prostituta en japonés?Sinochingo nocomo.',2,'Activo',3),
+		   ('- ¿Cómo se llama la madre del topo?.- Topota madre.',3,'Inactivo',4),		   
+		   ('No es lo mismo un metro de encaje negro que que un negro te encaje un metro.',4,'Activo',5),		   
+		   ('Ya regreso niños iré a comprar cigarros',5,'Activo',1),
+		   ('¿Que le dice una foca a su madre? -I love you, mother foca',1,'Inactivo',2),
+		   ('Devuelvan lo robado',2,'Activo',3),
+		   ('¿Como se dice diarrea en africano?, Avunda lakaka',3,'Inactivo',4),
+		   ('Masacraste a mi familia mal parido ijopu',4,'Activo',5);
+		   
+--selects a todas las tablas
+select * from estado_cliente;
+select * from estado_factura;
+select * from estado_usuario;
+select * from tipo_usuario;
+select * from tipo_productos;
+select * from estado_productos;
+select * from marcas;
+select * from cliente;
+select * from factura;
+select * from usuario;
+select * from productos;
+select * from detalle_factura;
+select * from resena;
+
+
+SELECT eu.id_estado_usuario, tu.id_tipo_usuario from estado_usuario eu inner join usuario u on eu.id_estado_usuario = u.id_estado_usuario inner join tipo_usuario tu on u.id_tipo_usuario = tu.id_tipo_usuario
+where u.usuario ='CH2020' and u.contrasena_usuario ='20200523' and u.id_estado_usuario between 1 and 2;
+
+--consultas con tipos de joins
+--inner join que muestra la compra del cliente numero 5
+select c.nombre_cliente, p.nombre_producto, df.precio_comprados, df.cantidad_comprados, f.fecha_factura from detalle_factura df 
+inner join factura f on df.id_factura = f.id_factura_cliente
+inner join cliente c on c.id_cliente = f.id_cliente 
+inner join productos p on df.id_productos = p.id_productos where c.id_cliente ='5';
+
+--inner join que muestra las reseñas con sus datos
+select r.comentario,r.clasificacion,p.nombre_producto from resena r 
+inner join detalle_factura d on r.id_detalle_factura = d.id_detalle_factura 
+inner join productos p on d.id_productos = p.id_productos;
+
+--left join que muestra las marcas con sus productos
+select * from marcas m 
+left outer join productos p on m.id_marcas = p.id_marcas
+order by marcas asc;
+
+--left join que muestra los estados de clientes con sus clientes
+select ec.estado_cliente, c.usuario_cliente,c.nombre_cliente, c.apellido_cliente, c.correo_cliente from estado_cliente ec 
+left join cliente c on ec.id_estado_cliente = c.id_estado_cliente
+order by ec.estado_cliente asc;
+
+--right join que muestra los clientes con sus estados
+select c.usuario_cliente,c.nombre_cliente, c.apellido_cliente, c.correo_cliente, ec.estado_cliente from cliente c
+right outer join estado_cliente ec  on ec.id_estado_cliente = c.id_estado_cliente
+order by ec.estado_cliente asc;
+
+--right join que muestra las marcas con sus productos
+select * from productos p
+right join marcas m  on m.id_marcas = p.id_marcas
+order by m.marcas asc;
+
+--full join de marcas que no estan siendo usadas por productos
+select * from productos p
+full outer join marcas m  on m.id_marcas = p.id_marcas
+where m.id_marcas is null or p.id_marcas is null
+order by m.marcas asc;
+
+--full join que muestra los clientes con sus estados
+select c.usuario_cliente,c.nombre_cliente, c.apellido_cliente, c.correo_cliente, ec.estado_cliente from cliente c
+full join estado_cliente ec  on ec.id_estado_cliente = c.id_estado_cliente
+order by ec.estado_cliente asc;
+
+--cross join que muestra productos con marcas
+select * from productos p
+cross join marcas m 
+order by m.marcas asc;
+
+--cross join que muestra los clientes con sus estados
+select c.usuario_cliente,c.nombre_cliente, c.apellido_cliente, c.correo_cliente, ec.estado_cliente from cliente c
+cross join estado_cliente ec
+order by ec.estado_cliente asc;
+
+--consultas update
+--actualizando la cantidad de producto segun numero de producto
+update productos set cantidad_producto=100 where id_productos=1;
+
+--actualizando el numero de marcar segun cantidad de producto
+update productos set id_marcas = 4 where cantidad_producto = 40;
+
+--Actualizando el nombre del producto a 'Handpresso' cuando sea el producto numero 12
+update productos set nombre_producto='Handpresso' where id_productos=12;
+
+--actualizando el nombre de un cliente cuando su usuario sea marro
+update cliente set nombre_cliente='Fernando' where usuario_cliente='marro';
+
+--actualizando una promoción de un tipo de producto cuando sea la primera ingresada
+update tipo_productos set promocion=20.00 where id_tipo_producto=(select min(id_tipo_producto) from tipo_productos);
+
+--actualizando la cantidad de productos comprados de un detalle de factura cuando sea la ultima ingresada
+update detalle_factura set cantidad_comprados=10 where id_detalle_factura=(select max(id_detalle_factura) from detalle_factura);
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------Asignaciones semana 14 a 17 abril:--------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+--Consultas con parámetros(hecho por Wilmer Carrillo)
+
+--1) mostrando usuarios con estado solicitado (activo=1)
+select*from usuario u inner join estado_usuario eu on u.id_estado_usuario = eu.id_estado_usuario
+where u.id_estado_usuario = 1 ;
+
+--2) mostrando productos con su tipo, marca y estado si su estado es el solicitado(agotado=2)
+select p.nombre_producto, p.precio, p.cantidad_producto, m.marcas, tp.tipo_producto, tp.promocion, ep.estado_producto  from productos p 
+inner join tipo_productos tp on p.id_tipo_producto = tp.id_tipo_producto
+inner join estado_productos ep on p.id_estado_producto = ep.id_estado_producto
+inner join marcas m on p.id_marcas = m.id_marcas
+where ep.id_estado_producto= 2;
+
+--3) mostrando productos con su tipo, marca y estado si el, estado no es el solicitado (agotado=2)
+select p.nombre_producto, p.precio, p.cantidad_producto, m.marcas, tp.tipo_producto, tp.promocion, ep.estado_producto  from productos p 
+inner join tipo_productos tp on p.id_tipo_producto = tp.id_tipo_producto
+inner join estado_productos ep on p.id_estado_producto = ep.id_estado_producto
+inner join marcas m on p.id_marcas = m.id_marcas
+where ep.id_estado_producto not in(2);
+
+--4) mostrando productos con su tipo, marca y estados segun la marca (Huawei)
+select p.nombre_producto, p.precio, p.cantidad_producto, m.marcas, tp.tipo_producto, tp.promocion, ep.estado_producto  from productos p 
+inner join tipo_productos tp on p.id_tipo_producto = tp.id_tipo_producto
+inner join estado_productos ep on p.id_estado_producto = ep.id_estado_producto
+inner join marcas m on p.id_marcas = m.id_marcas
+where m.marcas='Huawei';
+
+--5) mostrando productos con su tipo, marca y estados segun la marca ingresada(Huawei) y que su estado no sea el solicitado (2)
+select p.nombre_producto, p.precio, p.cantidad_producto, m.marcas, tp.tipo_producto, tp.promocion, ep.estado_producto  from productos p 
+inner join tipo_productos tp on p.id_tipo_producto = tp.id_tipo_producto
+inner join estado_productos ep on p.id_estado_producto = ep.id_estado_producto
+inner join marcas m on p.id_marcas = m.id_marcas
+where m.marcas='Huawei' and ep.id_estado_producto not in(2);
+
+--6) mostrando las compras con su cliente que haya sido hecha con algun tipo de pago (tarjeta de crédito)
+select c.nombre_cliente, c.apellido_cliente, f.fecha_factura, f.tipo_pago, p.nombre_producto, df.cantidad_comprados, f.total_factura from detalle_factura df 
+inner join factura f on f.id_factura_cliente = df.id_factura
+inner join cliente c on f.id_cliente = c.id_cliente
+inner join productos p on df.id_productos = p.id_productos
+where f.tipo_pago='tarjeta de crédito';
+
+--7) mostrando las compras con su cliente con cantidad de comprados mayores o iguales a algun numero (3) y que con algun tipo de pago (efectivo)
+select c.nombre_cliente, c.apellido_cliente, f.fecha_factura, f.tipo_pago, p.nombre_producto, df.cantidad_comprados, f.total_factura from detalle_factura df 
+inner join factura f on f.id_factura_cliente = df.id_factura
+inner join cliente c on f.id_cliente = c.id_cliente
+inner join productos p on df.id_productos = p.id_productos
+where f.tipo_pago ='efectivo' and df.cantidad_comprados >=3;
+
+--8) mostrando los clientes que compraron tal producto (almohadillas adhesivas)
+select c.nombre_cliente, c.apellido_cliente, f.fecha_factura, f.tipo_pago, p.nombre_producto, df.cantidad_comprados, f.total_factura from detalle_factura df 
+inner join factura f on f.id_factura_cliente = df.id_factura
+inner join cliente c on f.id_cliente = c.id_cliente
+inner join productos p on df.id_productos = p.id_productos
+where df.id_productos=1;
+
+--9) mostrando los clientes que compraron en tal fecha (2020-01-01)
+select c.nombre_cliente, c.apellido_cliente, f.fecha_factura, f.tipo_pago, p.nombre_producto, df.cantidad_comprados, f.total_factura from detalle_factura df 
+inner join factura f on f.id_factura_cliente = df.id_factura
+inner join cliente c on f.id_cliente = c.id_cliente
+inner join productos p on df.id_productos = p.id_productos
+where f.fecha_factura='2020-01-01';
+
+--10) mostrando los productos, estado y marca segun su tipo solicitado(almohadilla adhesiva=3)
+select p.nombre_producto, m.marcas, p.precio, p.cantidad_producto, ep.estado_producto, tp.tipo_producto, tp.promocion  from productos p
+inner join tipo_productos tp on p.id_tipo_producto = tp.id_tipo_producto
+inner join estado_productos ep on p.id_estado_producto = ep.id_estado_producto
+inner join marcas m on p.id_marcas = m.id_marcas
+where p.id_tipo_producto = 3;
+
+
+
+
+
+--Consultas para reportes con rango de fechas: (Hecho por guillermo minero)
+
+--1) mostrando las compras hechas en un rango de fechas (2020-02-01 hasta 2020-03-01)
+select c.nombre_cliente, c.apellido_cliente, f.fecha_factura, f.tipo_pago, p.nombre_producto, df.cantidad_comprados, f.total_factura from detalle_factura df 
+inner join factura f on f.id_factura_cliente = df.id_factura
+inner join cliente c on f.id_cliente = c.id_cliente
+inner join productos p on df.id_productos = p.id_productos
+where f.fecha_factura between '2020-02-01' and '2020-03-01';
+
+--2) mostrando las compras que no se hicieron en un rango de fechas (2020-02-01 hasta 2020-03-01)
+select c.nombre_cliente, c.apellido_cliente, f.fecha_factura, f.tipo_pago, p.nombre_producto, df.cantidad_comprados, f.total_factura from detalle_factura df 
+inner join factura f on f.id_factura_cliente = df.id_factura
+inner join cliente c on f.id_cliente = c.id_cliente
+inner join productos p on df.id_productos = p.id_productos
+where f.fecha_factura not between '2020-02-01' and '2020-03-01';
+
+--3) mostrando las compras hechas en un rango de fechas (2020-02-01 hasta 2020-03-01) y que su tipo de pago sea el solicitado(efectivo)
+select c.nombre_cliente, c.apellido_cliente, f.fecha_factura, f.tipo_pago, p.nombre_producto, df.cantidad_comprados, f.total_factura from detalle_factura df 
+inner join factura f on f.id_factura_cliente = df.id_factura
+inner join cliente c on f.id_cliente = c.id_cliente
+inner join productos p on df.id_productos = p.id_productos
+where f.fecha_factura between '2020-02-01' and '2020-03-01' and f.tipo_pago = 'efectivo';
+
+--4) mostrando las compras que no se hicieron en un rango de fechas (2020-02-01 hasta 2020-03-01) y que su tipo de pago no sea el solicitado(efectivo)
+select c.nombre_cliente, c.apellido_cliente, f.fecha_factura, f.tipo_pago, p.nombre_producto, df.cantidad_comprados, f.total_factura from detalle_factura df 
+inner join factura f on f.id_factura_cliente = df.id_factura
+inner join cliente c on f.id_cliente = c.id_cliente
+inner join productos p on df.id_productos = p.id_productos
+where f.fecha_factura not between '2020-02-01' and '2020-03-01' and f.tipo_pago not in('efectivo');
+
+--5)  mostrando las compras que se hicieron en un rango de fechas (2020-02-01 hasta 2020-03-01) y que su producto sea el solicitado(almohadillas adhesivas=1)
+select c.nombre_cliente, c.apellido_cliente, f.fecha_factura, f.tipo_pago, p.nombre_producto, df.cantidad_comprados, f.total_factura from detalle_factura df 
+inner join factura f on f.id_factura_cliente = df.id_factura
+inner join cliente c on f.id_cliente = c.id_cliente
+inner join productos p on df.id_productos = p.id_productos
+where f.fecha_factura between '2020-02-01' and '2020-03-01' and df.id_productos=1;
+
+--6)  mostrando las compras que no se hicieron en un rango de fechas (2020-02-01 hasta 2020-03-01) y que su producto no sea el solicitado(almohadillas adhesivas=1)
+select c.nombre_cliente, c.apellido_cliente, f.fecha_factura, f.tipo_pago, p.nombre_producto, df.cantidad_comprados, f.total_factura from detalle_factura df 
+inner join factura f on f.id_factura_cliente = df.id_factura
+inner join cliente c on f.id_cliente = c.id_cliente
+inner join productos p on df.id_productos = p.id_productos
+where f.fecha_factura not between '2020-02-01' and '2020-03-01' and df.id_productos not in(1);
+
+
+
+
+
+--Consultas para gráficos(Hecho por Wilmer carrillo y Guillermo minero):
+
+--1)mostrando los productos por cantidad del menor al mayor
+select id_productos, nombre_producto, cantidad_producto from productos order by cantidad_producto asc
+
+--2)mostrando los productos por cantidad del mayor al menor
+select id_productos, nombre_producto, cantidad_producto from productos order by cantidad_producto desc
+
+--3)mostrando los productos segun su marca y en orden alfabetico
+select m.marcas, p.nombre_producto from marcas m
+inner join productos p on p.id_marcas = m.id_marcas
+order by m.marcas asc;
+
+--4)mostrando los usuarios segun su tipo de usuario
+select  tu.tipo_usuario, u.usuario from usuario u
+inner join tipo_usuario tu on u.id_tipo_usuario = tu.id_tipo_usuario
+
+--5)mostrando los productos segun el precio de menor a mayor
+select nombre_producto, precio from productos
+order by precio asc
+
+--6)mostrando los productos segun el precio de mayor a menor
+select nombre_producto, precio from productos
+order by precio desc
+
+--7)mostrando la cantidad de comentarios que se han hecho y que estan activos
+select count(*)ComentariosActivos from resena
+where estado_comentario='Activo';
+
+--8)mostrando la cantidad de comentarios que se han hecho y que estan inactivos
+select count(*)ComentariosInactivos from resena
+where estado_comentario='Inactivo';
+
+--9)mostrando el total de comentarios
+select count(*)TotalComentarios from resena
+
+--10)mostrando el total de produtos
+select count(*)TotalProductos from productos
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------Asignaciones semana 20 a 24 de abril:--------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+--generación de back up(hecho por wilmer carrillo)--
+
+--para accerder a la ruta de carpeta bin de postgres--
+cd C:\Program Files (x86)\PostgreSQL\9.3\bin
+--comando para generar el back up(luego de haber accedido en la ruta anterior se copia lo siguiente)
+pg_dump -U postgres -C -f C:\Users\Public\RespaldoBasetienda.dump BaseTienda_#20180296_#20180695
+
+--borrando la base de datos luego de hacer el back up(en consola psql)--
+
+--en mi caso salió Server[localhost]: se da enter
+--Database [postgres]: se ingresa el nombre de la base
+--Username [postgres]: nombre del usuario
+--luego pedirá la contraseña y si se ingresa correctamente se conectara con nuestra base
+--luego se ingresa lo siguiente para conectarse con la base de datos postgres
+\c postgres
+--luego se borra la base si no esta siendo utilizada por nadie(tuve que cerrar pgadmin para poder borrarla)
+drop database "BaseTienda_#20180296_#20180695";
+
+--para recuperar la base de datos--
+--en consola de windows se dirige a esta dirección si no lo está
+cd C:\Program Files (x86)\PostgreSQL\9.3\bin
+--luego en consola de windows se pone lo siguiente--
+psql -U postgres < C:\Users\Public\RespaldoBasetienda.dump
+--se ingresa la contraseña del usuario de postgres y se espera a que se termine de restaurar
+--luego se conecta a la base en la consola psql con
+\c BaseTienda_#20180296_#20180695
+
+
+
+
+
+--tarea programada(hecho por guillermo minero)
+
+--se revisa que los archivos de pgpass esten bien configurados, para ello se busca en el explorador de archivos en este equipo poniendo pgpass para buscarlos
+--se crea un archivo.bat con lo siguiente:
+@echo off
+SET PG_BIN="C:\Program Files (x86)\PostgreSQL\9.3\bin\pg_dump.exe"
+SET PG_HOST=localhost
+SET PG_PORT=5432
+SET PG_DATABASE=nombre de la base de datos
+SET PG_USER=usuario de postgres
+SET PGPASSWORD= contraseña del usuario de postgres
+SET PG_PATH =C:\dataPostgreSQL\BackUps
+SET FECHAYHORA = %date:/=%%time:~0,8%
+SET FECHAYHORA = %FECHAYHORA: =-%
+SET FECHAYHORA = %FECHAYHORA: =0%
+SET PG_FILENAME = %PG_PATH%\%PG_DATABASE%-%FECHAYHORA%.sql
+%PG_BIN% -I -H %PG_HOST% -p %PG_PORT% -U %PG_USER% %PG_DATABASE% > %PG_FILENAME%
+
+-- se crea una tarea programada con el programador de tareas de windows
+--se configura la tarea usando la ruta donde está el script y se le asignan detalles como el periodo de tiempo que se ejecutaran, acciones(acá se especifica la ubicacion del archivo.bat), condiciones, etc
+-- luego se verifica que se ejecuto la tarea programada
+
+delete from estado_productos;
+select * from estado_productos;
+
+SELECT id_estado_cliente, estado_cliente
+                FROM estado_cliente
+                WHERE estado_cliente ILIKE '%e%'
+
+
+select*from cliente;
+
+
+SELECT C.id_cliente, C.nombre_cliente, C.apellido_cliente, C.correo_cliente, C.usuario_cliente, C.contrasena_cliente, E.estado_cliente
+                FROM cliente C INNER JOIN estado_cliente E
+                ON C.id_estado_cliente = E.id_estado_cliente
+                WHERE C.nombre_cliente ILIKE '%m%' OR C.apellido_cliente ILIKE '%m%' OR
+                      C.correo_cliente ILIKE '%m%' OR C.usuario_cliente ILIKE '%m%' OR
+                      E.estado_cliente ILIKE '%m%'
+
+
+
+
+SELECT F.id_factura_cliente, C.nombre_cliente, F.fecha_factura, F.direccion, P.nombre_producto, DF.cantidad_comprados, F.total_factura, F.tipo_pago FROM factura F
+INNER JOIN detalle_factura DF ON F.id_factura_cliente = DF.id_factura 
+INNER JOIN productos P ON DF.id_productos = P.id_productos
+INNER JOIN cliente C ON F.id_cliente = C.id_cliente
+WHERE C.id_cliente = 2;
+
+select*from resena;
+select*from detalle_factura;
+select*from productos;
+select*from factura;
+
+SELECT R.id_resena, C.nombre_cliente, P.nombre_producto, R.clasificacion, R.comentario, R.estado_comentario
+FROM resena R INNER JOIN detalle_factura DF ON R.id_detalle_factura = DF.id_detalle_factura
+INNER JOIN productos P ON DF.id_productos = P.id_productos
+INNER JOIN factura F ON F.id_factura_cliente = DF.id_factura
+INNER JOIN cliente C ON F.id_factura_cliente = C.id_cliente
+ORDER BY R.id_resena;
+
+SELECT R.id_resena, C.nombre_cliente, P.nombre_producto, R.clasificacion, R.comentario, R.estado_comentario
+FROM resena R INNER JOIN detalle_factura DF ON R.id_detalle_factura = DF.id_detalle_factura
+INNER JOIN productos P ON DF.id_productos = P.id_productos
+INNER JOIN factura F ON F.id_factura_cliente = DF.id_factura
+INNER JOIN cliente C ON F.id_factura_cliente = C.id_cliente
+WHERE C.nombre_cliente ILIKE '%Cecilia%' OR P.nombre_producto ILIKE '%Luces Leds%' OR R.comentario ILIKE'%No es lo%' OR R.estado_comentario ILIKE'%Activo%'
+
+select c.nombre_cliente from cliente c inner join factura f on c.id_cliente = f.id_factura_cliente
+
+SELECT F.id_factura_cliente, C.nombre_cliente, F.total_factura, F.fecha_factura, F.tipo_pago, F.direccion
+FROM factura F INNER JOIN cliente C ON F.id_cliente = C.id_cliente
+WHERE C.nombre_cliente ILIKE'%e%' OR F.fecha_factura ILIKE'%e%' OR F.tipo_pago ILIKE'%e%' OR F.direccion ILIKE'%w%'
+
+select*from detalle_factura;
+select*from factura;
+select*from productos;
+
+SELECT DF.id_detalle_factura, P.nombre_producto, DF.cantidad_comprados, DF.precio_comprados
+FROM detalle_factura DF INNER JOIN productos P ON DF.id_productos = P.id_productos
+WHERE DF.id_factura = 3
+
+/*consultas sitio público*/
+select*from productos;
+select*from marcas;
+select*from tipo_productos;
+
+/*Para productos 1*/
+SELECT P.ID_PRODUCTOS, P.NOMBRE_PRODUCTO, P.PRECIO, P.CANTIDAD_PRODUCTO, P.IMAGEN, M.MARCAS, T.TIPO_PRODUCTO, T.PROMOCION
+FROM PRODUCTOS P INNER JOIN MARCAS M ON P.ID_MARCAS = M.ID_MARCAS
+INNER JOIN TIPO_PRODUCTOS T ON P.ID_TIPO_PRODUCTO = T.ID_TIPO_PRODUCTO WHERE P.CANTIDAD_PRODUCTO > 0;
+
+/*Para el index en productos*/
+SELECT M.MARCAS, T.TIPO_PRODUCTO, P.NOMBRE_PRODUCTO FROM MARCAS M
+INNER JOIN PRODUCTOS P ON M.ID_MARCAS = P.ID_MARCAS
+INNER JOIN TIPO_PRODUCTOS T ON T.ID_TIPO_PRODUCTO = P.ID_TIPO_PRODUCTO WHERE P.CANTIDAD_PRODUCTO>0;
+/*Para index en marcas*/
+SELECT M.ID_MARCAS, M.MARCAS, COUNT(P.ID_MARCAS)ProductosPorMarca FROM MARCAS M
+INNER JOIN PRODUCTOS P ON M.ID_MARCAS = P.ID_MARCAS WHERE P.CANTIDAD_PRODUCTO >0
+GROUP BY M.ID_MARCAS ORDER BY M.ID_MARCAS;
+
+/*Para marcas1*/
+SELECT M.ID_MARCAS, M.MARCAS, COUNT(P.ID_MARCAS)ProductosPorMarca FROM MARCAS M
+INNER JOIN PRODUCTOS P ON M.ID_MARCAS = P.ID_MARCAS WHERE M.MARCAS ILIKE'%X%' AND P.CANTIDAD_PRODUCTO >0
+GROUP BY M.ID_MARCAS ORDER BY M.ID_MARCAS;
+
+/*Para marcas1*/
+SELECT M.ID_MARCAS, M.MARCAS, COUNT(P.ID_MARCAS)ProductosPorMarca FROM MARCAS M
+INNER JOIN PRODUCTOS P ON M.ID_MARCAS = P.ID_MARCAS WHERE P.CANTIDAD_PRODUCTO >0
+GROUP BY M.ID_MARCAS ORDER BY M.ID_MARCAS;
+
+/*Para marcas2*/
+SELECT DISTINCT(M.ID_MARCAS), M.MARCAS, P.NOMBRE_PRODUCTO, T.TIPO_PRODUCTO FROM MARCAS M
+INNER JOIN PRODUCTOS P ON P.ID_MARCAS = M.ID_MARCAS
+INNER JOIN TIPO_PRODUCTOS T ON P.ID_TIPO_PRODUCTO = T.ID_TIPO_PRODUCTO WHERE P.CANTIDAD_PRODUCTO >0
+ORDER BY M.MARCAS;
+
+/*Para marcas2*/
+SELECT DISTINCT(M.ID_MARCAS), M.MARCAS, P.NOMBRE_PRODUCTO, T.TIPO_PRODUCTO FROM MARCAS M
+INNER JOIN PRODUCTOS P ON P.ID_MARCAS = M.ID_MARCAS
+INNER JOIN TIPO_PRODUCTOS T ON P.ID_TIPO_PRODUCTO = T.ID_TIPO_PRODUCTO WHERE P.CANTIDAD_PRODUCTO >0 AND M.ID_MARCAS=1
+ORDER BY M.MARCAS;
+
+/*Para productos 2*/
+SELECT DISTINCT(M.ID_MARCAS), M.MARCAS, P.NOMBRE_PRODUCTO, T.TIPO_PRODUCTO FROM MARCAS M
+INNER JOIN PRODUCTOS P ON P.ID_MARCAS = M.ID_MARCAS
+INNER JOIN TIPO_PRODUCTOS T ON P.ID_TIPO_PRODUCTO = T.ID_TIPO_PRODUCTO WHERE P.CANTIDAD_PRODUCTO >0
+ORDER BY M.MARCAS;
+
+SELECT * FROM ESTADO_PRODUCTOS order by id_estado_producto;
+SELECT * FROM TIPO_PRODUCTOS
+SELECT * FROM PRODUCTOS
+
+/*Para index 2 en productos en el carrusel*/
+SELECT P.ID_PRODUCTOS, M.MARCAS, T.TIPO_PRODUCTO, P.NOMBRE_PRODUCTO, P.PRECIO FROM MARCAS M
+INNER JOIN PRODUCTOS P ON M.ID_MARCAS = P.ID_MARCAS
+INNER JOIN ESTADO_PRODUCTOS EP ON P.ID_ESTADO_PRODUCTO = EP.ID_ESTADO_PRODUCTO
+INNER JOIN TIPO_PRODUCTOS T ON T.ID_TIPO_PRODUCTO = P.ID_TIPO_PRODUCTO WHERE P.CANTIDAD_PRODUCTO > 0 AND EP.ID_ESTADO_PRODUCTO IN (1)
+ORDER BY P.ID_PRODUCTOS;
+
+/*Para index 2 en productos en el modal de comprar*/
+SELECT P.ID_PRODUCTOS, P.PRECIO, P.CANTIDAD_PRODUCTO, TP.PROMOCION FROM PRODUCTOS P
+INNER JOIN TIPO_PRODUCTOS TP ON P.ID_TIPO_PRODUCTO = TP.ID_TIPO_PRODUCTO WHERE P.ID_PRODUCTOS = 26;
+
+/*Para index2 en marcas*/
+SELECT M.ID_MARCAS, M.MARCAS, COUNT(P.ID_MARCAS)Cantidad_Producto FROM MARCAS M
+INNER JOIN PRODUCTOS P ON M.ID_MARCAS = P.ID_MARCAS 
+INNER JOIN ESTADO_PRODUCTOS EP ON P.ID_ESTADO_PRODUCTO = EP.ID_ESTADO_PRODUCTO
+WHERE P.CANTIDAD_PRODUCTO >0 AND EP.ID_ESTADO_PRODUCTO IN (1)
+GROUP BY M.ID_MARCAS ORDER BY M.ID_MARCAS;
+
+/*Para productos2U y Productos2 en el carrusel*/
+SELECT DISTINCT(T.ID_TIPO_PRODUCTO), M.MARCAS, P.NOMBRE_PRODUCTO, P.PRECIO, T.TIPO_PRODUCTO, T.PROMOCION FROM MARCAS M
+INNER JOIN PRODUCTOS P ON P.ID_MARCAS = M.ID_MARCAS
+INNER JOIN TIPO_PRODUCTOS T ON P.ID_TIPO_PRODUCTO = T.ID_TIPO_PRODUCTO
+INNER JOIN ESTADO_PRODUCTOS EP ON P.ID_ESTADO_PRODUCTO = EP.ID_ESTADO_PRODUCTO
+WHERE P.CANTIDAD_PRODUCTO >0 AND EP.ID_ESTADO_PRODUCTO IN(1)
+ORDER BY T.ID_TIPO_PRODUCTO;
+
+
+/*Para marcas2*/
+SELECT DISTINCT(M.ID_MARCAS), M.MARCAS, P.NOMBRE_PRODUCTO, T.TIPO_PRODUCTO FROM MARCAS M
+INNER JOIN PRODUCTOS P ON P.ID_MARCAS = M.ID_MARCAS
+INNER JOIN TIPO_PRODUCTOS T ON P.ID_TIPO_PRODUCTO = T.ID_TIPO_PRODUCTO WHERE P.CANTIDAD_PRODUCTO >0
+ORDER BY M.ID_MARCAS;
+
+
+SELECT * FROM DETALLE_FACTURA ORDER BY ID_DETALLE_FACTURA;
+SELECT * FROM FACTURA ORDER BY ID_FACTURA_CLIENTE;
+SELECT * FROM ESTADO_FACTURA ORDER BY ID_ESTADO_FACTURA;
+SELECT * FROM PRODUCTOS ORDER BY ID_PRODUCTOS;
+
+/*CONSULTA PARA VER LAS COMPRAS HECHAS*/
+SELECT F.ID_FACTURA_CLIENTE, P.NOMBRE_PRODUCTO, DF.CANTIDAD_COMPRADOS, DF.PRECIO_COMPRADOS, F.FECHA_FACTURA, EF.ESTADO_FACTURA, F.TIPO_PAGO, F.TOTAL_FACTURA, F.DIRECCION FROM DETALLE_FACTURA DF
+INNER JOIN PRODUCTOS P ON DF.ID_PRODUCTOS = P.ID_PRODUCTOS 
+INNER JOIN FACTURA F ON DF.ID_FACTURA = F.ID_FACTURA_CLIENTE
+INNER JOIN ESTADO_FACTURA EF ON F.ID_ESTADO_FACTURA = EF.ID_ESTADO_FACTURA
+INNER JOIN CLIENTE C ON F.ID_CLIENTE = C.ID_CLIENTE
+WHERE EF.ID_ESTADO_FACTURA IN ( 1 , 2 , 3 , 4 ) AND F.ID_CLIENTE = 6 ORDER BY F.ID_FACTURA_CLIENTE;
+
+SELECT SUM(DF.PRECIO_COMPRADOS)AS TOTAL FROM DETALLE_FACTURA DF
+INNER JOIN FACTURA F ON DF.ID_FACTURA = F.ID_FACTURA_CLIENTE
+INNER JOIN CLIENTE C ON F.ID_CLIENTE = C.ID_CLIENTE
+INNER JOIN ESTADO_FACTURA EF ON F.ID_ESTADO_FACTURA = EF.ID_ESTADO_FACTURA
+WHERE EF.ID_ESTADO_FACTURA IN ( 1 , 2 , 3 , 4 ) AND F.ID_CLIENTE = 6 AND F.ID_FACTURA_CLIENTE = 16 ORDER BY F.ID_FACTURA_CLIENTE;
+
+SELECT (DF.CANTIDAD_COMPRADOS * P.PRECIO) FROM DETALLE_FACTURA DF
+INNER JOIN FACTURA F ON DF.ID_FACTURA = F.ID_FACTURA_CLIENTE
+INNER JOIN CLIENTE C ON F.ID_CLIENTE = C.ID_CLIENTE
+INNER JOIN ESTADO_FACTURA EF ON F.ID_ESTADO_FACTURA = EF.ID_ESTADO_FACTURA
+INNER JOIN PRODUCTOS P ON DF.ID_PRODUCTOS = P.ID_PRODUCTOS
+WHERE EF.ID_ESTADO_FACTURA IN ( 2 , 3 , 4 ) AND F.ID_CLIENTE = 6 AND F.ID_FACTURA_CLIENTE = 16 ORDER BY F.ID_FACTURA_CLIENTE;
+
+/*PARA VER LAS RESEÑAS EN GENERAL*/
+SELECT * FROM RESENA;
+SELECT * FROM DETALLE_FACTURA ORDER BY ID_DETALLE_FACTURA;
+SELECT * FROM FACTURA ORDER BY ID_FACTURA_CLIENTE;
+SELECT * FROM ESTADO_FACTURA ORDER BY ID_ESTADO_FACTURA;
+SELECT * FROM PRODUCTOS ORDER BY ID_PRODUCTOS;
+SELECT * FROM MARCAS;
+
+SELECT R.COMENTARIO, R.CLASIFICACION, P.NOMBRE_PRODUCTO, P.IMAGEN, M.MARCAS, C.USUARIO_CLIENTE FROM PRODUCTOS P
+INNER JOIN DETALLE_FACTURA DF ON DF.ID_PRODUCTOS = P.ID_PRODUCTOS
+INNER JOIN RESENA R ON R.ID_DETALLE_FACTURA = DF.ID_DETALLE_FACTURA
+INNER JOIN MARCAS M ON P.ID_MARCAS = M.ID_MARCAS
+INNER JOIN FACTURA F ON DF.ID_FACTURA = F.ID_FACTURA_CLIENTE
+INNER JOIN ESTADO_FACTURA EF ON F.ID_ESTADO_FACTURA = EF.ID_ESTADO_FACTURA
+INNER JOIN CLIENTE C ON F.ID_CLIENTE = C.ID_CLIENTE
+WHERE EF.ID_ESTADO_FACTURA IN ( 4 ) AND R.ESTADO_COMENTARIO = 'Activo' ORDER BY DF.ID_PRODUCTOS;
+
+/*Para ver los productos a los que se pueden hacer reseñas*/
+SELECT DISTINCT(P.NOMBRE_PRODUCTO) , DF.ID_DETALLE_FACTURA, P.IMAGEN, M.MARCAS, T.TIPO_PRODUCTO, EF.ESTADO_FACTURA FROM PRODUCTOS P
+INNER JOIN DETALLE_FACTURA DF ON DF.ID_PRODUCTOS = P.ID_PRODUCTOS
+INNER JOIN FACTURA F ON DF.ID_FACTURA = F.ID_FACTURA_CLIENTE
+INNER JOIN ESTADO_FACTURA EF ON F.ID_ESTADO_FACTURA = EF.ID_ESTADO_FACTURA
+INNER JOIN MARCAS M ON P.ID_MARCAS = M.ID_MARCAS
+INNER JOIN CLIENTE C ON F.ID_CLIENTE = C.ID_CLIENTE
+INNER JOIN RESENA R ON R.ID_DETALLE_FACTURA = DF.ID_DETALLE_FACTURA
+INNER JOIN TIPO_PRODUCTOS T ON P.ID_TIPO_PRODUCTO = T.ID_TIPO_PRODUCTO
+WHERE EF.ID_ESTADO_FACTURA IN ( 4 ) AND F.ID_CLIENTE = 2 AND R.ID_DETALLE_FACTURA IS NULL ORDER BY P.NOMBRE_PRODUCTO;
+
+/*PARA CARRITO DE COMPRAS*/
+SELECT * FROM RESENA;
+SELECT * FROM DETALLE_FACTURA ORDER BY ID_DETALLE_FACTURA;
+SELECT * FROM FACTURA ORDER BY ID_FACTURA_CLIENTE;
+SELECT * FROM ESTADO_FACTURA ORDER BY ID_ESTADO_FACTURA;
+SELECT * FROM PRODUCTOS ORDER BY ID_PRODUCTOS;
+SELECT * FROM MARCAS;
+
+SELECT P.NOMBRE_PRODUCTO, P.PRECIO, DF.CANTIDAD_COMPRADOS, DF.PRECIO_COMPRADOS, F.TOTAL_FACTURA FROM DETALLE_FACTURA DF
+INNER JOIN FACTURA F ON DF.ID_FACTURA = F.ID_FACTURA_CLIENTE
+INNER JOIN PRODUCTOS P ON DF.ID_PRODUCTOS = P.ID_PRODUCTOS
+INNER JOIN CLIENTE C ON F.ID_CLIENTE = C.ID_CLIENTE
+INNER JOIN ESTADO_FACTURA EF ON  F.ID_ESTADO_FACTURA = EF.ID_ESTADO_FACTURA
+WHERE F.ID_CLIENTE = 1 AND EF.ID_ESTADO_FACTURA IN (1);
